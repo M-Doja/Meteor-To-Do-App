@@ -118,5 +118,11 @@ if (Meteor.isClient) {
             }
 
             Tasks.update(taskId, { $set: { private: setToPrivate } });
+
+          if (Meteor.isServer) {
+              Meteor.startup(function () {
+                // code to run on server at startup
+              });
+            }
           }
         });
