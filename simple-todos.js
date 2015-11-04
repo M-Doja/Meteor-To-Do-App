@@ -88,13 +88,13 @@ if (Meteor.isClient) {
             Tasks.insert({
               text: text,
               createdAt: new Date(),
-              owner: Meteor.userId(),
-              username: Meteor.user().username
+              owner: Meteor.userId(), //_id of logged in user
+              username: Meteor.user().username //username of logged in user
             });
           },
-          deleteTask: function (taskId) {
+          deleteTask: function (taskId, owner) {
             var task = Tasks.findOne(taskId);
-            if (task.private && task.owner !== Meteor.userId()) {
+            if (task.private && task.owner !== Meteor.userId() || !task.private && task.owner !== Meteor.userId()) {
               // If the task is private, make sure only the owner can delete it
               throw new Meteor.Error("not-authorized");
             }
